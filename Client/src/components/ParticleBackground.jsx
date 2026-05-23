@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 export default function ParticleBackground() {
   const containerRef = useRef(null);
@@ -10,21 +11,41 @@ export default function ParticleBackground() {
     let scene, camera, renderer, particleSystem;
     let animationFrameId;
 
-    // 1. Scene & Setup
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+
     camera.position.set(0, 15, 30);
     camera.lookAt(0, 0, 0);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    containerRef.current.appendChild(renderer.domElement);
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+    });
 
-    // 2. Create the Particle Mesh Grid (High Density)
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, 2)
+    );
+
+    containerRef.current.appendChild(
+      renderer.domElement
+    );
+
     const particleCount = 6500;
     const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
+    const positions = new Float32Array(
+      particleCount * 3
+    );
 
     const rows = 100;
     const cols = 65;
@@ -36,7 +57,6 @@ export default function ParticleBackground() {
       for (let c = 0; c < cols; c++) {
         if (index >= particleCount) break;
 
-        // Center the grid on the 3D floor plane
         const x = (r - rows / 2) * spacingX;
         const z = (c - cols / 2) * spacingZ;
         const y = 0;
@@ -49,86 +69,131 @@ export default function ParticleBackground() {
       }
     }
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
 
-    // 3. Premium High-End Glow Shader Material
     const material = new THREE.PointsMaterial({
-      color: 0x4ecdc4, // Luxury cyan/aquamarine hue
-      size: 0.18,      // Perfectly crisp particle weight
-      sizeAttenuation: true, 
+      color: 0x4ecdc4,
+      size: 0.18,
+      sizeAttenuation: true,
       transparent: true,
       opacity: 0.85,
-      blending: THREE.AdditiveBlending, // Forces overlapping crests to explode into white hot spots
+      blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
 
-    particleSystem = new THREE.Points(geometry, material);
+    particleSystem = new THREE.Points(
+      geometry,
+      material
+    );
+
     scene.add(particleSystem);
 
-    // 4. Subtle Interactive Mouse Tracking
     let mouseX = 0;
     let targetMouseX = 0;
 
     const handleMouseMove = (event) => {
-      targetMouseX = (event.clientX - window.innerWidth / 2) * 0.03;
+      targetMouseX =
+        (event.clientX - window.innerWidth / 2) *
+        0.03;
     };
-    window.addEventListener('mousemove', handleMouseMove);
 
-    // Window resizing handle
+    window.addEventListener(
+      "mousemove",
+      handleMouseMove
+    );
+
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
+      camera.aspect =
+        window.innerWidth / window.innerHeight;
 
-    // 5. High-fidelity Math Animation Frame
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+      );
+    };
+
+    window.addEventListener("resize", handleResize);
+
     const clock = new THREE.Clock();
 
     const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
+      animationFrameId =
+        requestAnimationFrame(animate);
 
       const elapsedTime = clock.getElapsedTime();
-      const positionsArray = particleSystem.geometry.attributes.position.array;
 
-      // Eased mouse rotation for a smooth fluid response
+      const positionsArray =
+        particleSystem.geometry.attributes.position
+          .array;
+
       mouseX += (targetMouseX - mouseX) * 0.05;
-      particleSystem.rotation.y = elapsedTime * 0.03 + mouseX * 0.2;
 
-      // Apply a multi-layered complex sine/cosine wave to emulate actual fluid dynamics
+      particleSystem.rotation.y =
+        elapsedTime * 0.03 + mouseX * 0.2;
+
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         const x = positionsArray[i3];
         const z = positionsArray[i3 + 2];
 
-        // Complex compounding frequencies create organic peaks and valleys
-        const wave1 = Math.sin(x * 0.15 + elapsedTime * 1.2) * 1.2;
-        const wave2 = Math.cos(z * 0.2 + elapsedTime * 0.8) * 0.8;
-        const wave3 = Math.sin((x + z) * 0.08 + elapsedTime * 1.5) * 0.5;
+        const wave1 =
+          Math.sin(x * 0.15 + elapsedTime * 1.2) *
+          1.2;
 
-        // Directly modify Y coordinate within the positions matrix array
-        positionsArray[i3 + 1] = wave1 + wave2 + wave3;
+        const wave2 =
+          Math.cos(z * 0.2 + elapsedTime * 0.8) *
+          0.8;
+
+        const wave3 =
+          Math.sin(
+            (x + z) * 0.08 + elapsedTime * 1.5
+          ) * 0.5;
+
+        positionsArray[i3 + 1] =
+          wave1 + wave2 + wave3;
       }
 
-      particleSystem.geometry.attributes.position.needsUpdate = true;
+      particleSystem.geometry.attributes.position.needsUpdate =
+        true;
+
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // ⚡ CLEANUP DESTRUCTOR: Completely tears down WebGL elements and global variables
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-      
+
+      window.removeEventListener(
+        "mousemove",
+        handleMouseMove
+      );
+
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+
       if (renderer) {
         renderer.dispose();
-        if (containerRef.current && renderer.domElement) {
-          containerRef.current.removeChild(renderer.domElement);
+
+        if (
+          containerRef.current &&
+          renderer.domElement
+        ) {
+          containerRef.current.removeChild(
+            renderer.domElement
+          );
         }
       }
+
       if (geometry) geometry.dispose();
+
       if (material) material.dispose();
     };
   }, []);
@@ -137,15 +202,16 @@ export default function ParticleBackground() {
     <div
       ref={containerRef}
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#03070d', // High-contrast premium obsidian background
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "#03070d",
         zIndex: -1,
-        pointerEvents: 'none',
+        pointerEvents: "none",
       }}
     />
   );
 }
+

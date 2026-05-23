@@ -9,17 +9,16 @@ function CoreCube() {
   const ringRef = useRef();
   const outerRingRef = useRef();
 
-  // Cache uniforms using useMemo so memory is allocated exactly ONCE
+
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uColor: { value: new THREE.Color("#22d3ee") },
   }), []);
 
   useFrame((state) => {
-    // Access clock time directly from the global state reference (No extra allocations)
+   
     const time = state.clock.getElapsedTime();
 
-    // 🛡️ Safe Guard + High-Performance Increments
     if (cubeRef.current) {
       cubeRef.current.rotation.x += 0.003;
       cubeRef.current.rotation.y += 0.004;
@@ -41,7 +40,7 @@ function CoreCube() {
 
   return (
     <group>
-      {/* CORE MATRIX */}
+      
       <mesh ref={cubeRef}>
         <boxGeometry args={[2.3, 2.3, 2.3]} />
         <shaderMaterial
@@ -75,7 +74,7 @@ function CoreCube() {
         />
       </mesh>
 
-      {/* RINGS */}
+      
       <mesh ref={ringRef}>
         <torusGeometry args={[2.5, 0.012, 6, 60]} /> {/* Reduced radial segments from 100 to 60 */}
         <meshBasicMaterial color="#22d3ee" transparent blending={THREE.AdditiveBlending} />
@@ -103,14 +102,13 @@ export default function BlockchainCore3D() {
       <div className="h-[600px] rounded-[36px] overflow-hidden border border-cyan-500/20 bg-black/40 backdrop-blur-md shadow-[0_0_60px_rgba(34,211,238,0.12)]">
         <Canvas
           camera={{ position: [0, 0, 6.5], fov: 50 }}
-          dpr={1} // ⚡ Performance Boost: Lock pixel ratio to prevent GPU render-target thrashing
+          dpr={1} //
           gl={{
-            antialias: false, // Turned off since wireframes are thin and bloom softens edges automatically
-            powerPreference: "high-performance",
+            antialias: false,
             failIfMajorPerformanceCaveat: true,
           }}
         >
-          {/* Reduced star count slightly to lower draw calls */}
+          
           <Stars radius={60} depth={40} count={400} factor={3} saturation={0} fade speed={0.5} />
 
           <CoreCube />
@@ -118,10 +116,10 @@ export default function BlockchainCore3D() {
           <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.3} />
 
           <EffectComposer>
-            {/* Optimized pass parameters */}
+           
             <Bloom
               intensity={1.8}
-              luminanceThreshold={0.2} // Higher threshold skips calculating processing bloom on dark background fragments
+              luminanceThreshold={0.2}
               luminanceSmoothing={0.7}
             />
           </EffectComposer>

@@ -4,7 +4,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
-// Custom Holographic Scanline Shader Material
+
 const HolographicShaderMaterial = {
   vertexShader: `
     varying vec2 vUv;
@@ -44,7 +44,7 @@ function NeuralCoreEngine() {
   const ringTwo = useRef();
   const pointCloudRef = useRef();
 
-  // Create clean uniform references to mutate in the frame loop without garbage collection
+  
   const customsUniforms = useMemo(() => ({
     uTime: { value: 0 },
     uColor: { value: new THREE.Color("#a855f7") }
@@ -53,10 +53,10 @@ function NeuralCoreEngine() {
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
 
-    // Defensive Guard: Check if references exist before updating to stop page unmount crashes
+    
     if (coreRef.current) {
       coreRef.current.rotation.y = time * 0.15;
-      // Pulse scale slightly using a sine wave to simulate a breathing system
+     
       const pulse = 1.0 + Math.sin(time * 2.0) * 0.03;
       coreRef.current.scale.set(pulse, pulse, pulse);
     }
@@ -75,7 +75,7 @@ function NeuralCoreEngine() {
       ringTwo.current.rotation.z = time * 0.2;
     }
 
-    // Update time uniform for our custom shader scanlines
+   
     if (coreRef.current?.material?.uniforms) {
       coreRef.current.material.uniforms.uTime.value = time;
     }
@@ -83,7 +83,7 @@ function NeuralCoreEngine() {
 
   return (
     <group>
-      {/* CENTRAL CORE: Wireframe with holographic scanline shader */}
+     
       <mesh ref={coreRef}>
         <sphereGeometry args={[1.7, 40, 40]} />
         <shaderMaterial
@@ -98,7 +98,7 @@ function NeuralCoreEngine() {
         />
       </mesh>
 
-      {/* INNER LAYER: Shimmering neural point cloud matrix */}
+    
       <points ref={pointCloudRef}>
         <sphereGeometry args={[1.65, 30, 30]} />
         <pointsMaterial
@@ -111,7 +111,7 @@ function NeuralCoreEngine() {
         />
       </points>
 
-      {/* INNER CYAN RING */}
+      
       <mesh ref={ringOne}>
         <torusGeometry args={[2.4, 0.015, 8, 100]} />
         <meshBasicMaterial
@@ -121,7 +121,7 @@ function NeuralCoreEngine() {
         />
       </mesh>
 
-      {/* OUTER PINK RING */}
+     
       <mesh ref={ringTwo} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[3.0, 0.012, 8, 100]} />
         <meshBasicMaterial

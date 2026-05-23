@@ -1,26 +1,25 @@
+
 import { useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { speakTrustChain } from "./AIVoiceAssistant";
 
 export default function GlobalCommandCenter() {
-  // 🛡️ FIX HYDRATION ERROR: Calculate positions once so client and server match perfectly
   const verificationPings = useMemo(() => {
     return [...Array(8)].map((_, i) => ({
       id: i,
-      // Target bounds restricted safely to lock them directly onto the planet frame surface
       top: `${20 + Math.random() * 60}%`,
       left: `${20 + Math.random() * 60}%`,
       delay: i * 0.25,
     }));
   }, []);
 
-  // System status notification trigger hook
   useEffect(() => {
     const speechTimer = setTimeout(() => {
       if (typeof speakTrustChain === "function") {
         speakTrustChain("Establishing global telemetry link. Node status metrics aggregate stable across all sectors.");
       }
     }, 800);
+
     return () => clearTimeout(speechTimer);
   }, []);
 
@@ -28,15 +27,14 @@ export default function GlobalCommandCenter() {
     <div className="mt-24 max-w-7xl mx-auto px-4 font-mono select-none relative">
       <div className="relative overflow-hidden rounded-[32px] border border-cyan-500/10 bg-black/40 backdrop-blur-xl p-6 md:p-10 shadow-[0_0_60px_rgba(34,211,238,0.05)]">
         
-        {/* Ambient Backdrops */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 pointer-events-none" />
 
         <div className="relative z-10">
-          {/* CONTROL SECTION HEADER */}
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-wider">
               GLOBAL COMMAND CENTER
             </h2>
+
             <p className="text-gray-400 mt-3 text-xs md:text-sm tracking-wide max-w-xl mx-auto">
               Real-time worldwide ledger synchronicity and autonomous transaction routing logs.
             </p>
@@ -44,7 +42,6 @@ export default function GlobalCommandCenter() {
 
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
             
-            {/* LEFT LOGICAL SECTOR PANEL */}
             <div className="space-y-4 w-full lg:w-[32%] order-2 lg:order-1">
               {[
                 { name: "Asia Supply Chain Network", status: "Active" },
@@ -72,47 +69,48 @@ export default function GlobalCommandCenter() {
                       delay: index * 0.4,
                     }}
                   />
+
                   <div className="flex-1 min-w-0">
-                    <p className="text-white text-xs font-bold truncate tracking-wide">{item.name}</p>
-                    <p className="text-emerald-400 text-[10px] uppercase font-bold tracking-widest mt-0.5">{item.status}</p>
+                    <p className="text-white text-xs font-bold truncate tracking-wide">
+                      {item.name}
+                    </p>
+
+                    <p className="text-emerald-400 text-[10px] uppercase font-bold tracking-widest mt-0.5">
+                      {item.status}
+                    </p>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* CENTRAL INTERACTIVE RADAR SPHERE */}
             <div className="relative w-[340px] md:w-[400px] h-[340px] md:w-[400px] flex items-center justify-center order-1 lg:order-2">
-              
-              {/* Outer Satellite Tracks */}
               <motion.div
                 className="absolute w-full h-full rounded-full border border-cyan-500/10 border-dashed"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
               />
+
               <motion.div
                 className="absolute w-[80%] h-[80%] rounded-full border border-cyan-500/5"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Core Telemetry Planet Node */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                 className="relative w-[220px] md:w-[250px] h-[220px] md:h-[250px] rounded-full bg-gradient-to-br from-cyan-950 via-blue-950 to-black shadow-[0_0_80px_rgba(34,211,238,0.25)] border border-cyan-500/20 overflow-hidden"
               >
-                {/* Surface Mesh Atmosphere Simulation */}
                 <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_right,#22d3ee_1px,transparent_1px),linear-gradient(to_bottom,#22d3ee_1px,transparent_1px)] bg-[size:16px_16px]" />
+
                 <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_30%,#ffffff,transparent_40%)]" />
 
-                {/* Sweeping Radar Scanner Line */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent origin-center"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
                 />
 
-                {/* 🔒 ANCHORED TARGET FIELD: Floating verification pings locked safely inside the Earth framework */}
                 {verificationPings.map((ping) => (
                   <motion.div
                     key={ping.id}
@@ -133,7 +131,6 @@ export default function GlobalCommandCenter() {
               </motion.div>
             </div>
 
-            {/* RIGHT STATISTICS PANEL */}
             <div className="grid grid-cols-2 gap-4 w-full lg:w-[32%] order-3">
               {[
                 { title: "ACTIVE NODES", value: "12,847" },
@@ -152,6 +149,7 @@ export default function GlobalCommandCenter() {
                   <h3 className="text-2xl md:text-3xl font-black text-cyan-400 tracking-tight">
                     {stat.value}
                   </h3>
+
                   <p className="text-gray-400 mt-1 text-[10px] font-bold tracking-widest uppercase">
                     {stat.title}
                   </p>
@@ -165,3 +163,4 @@ export default function GlobalCommandCenter() {
     </div>
   );
 }
+

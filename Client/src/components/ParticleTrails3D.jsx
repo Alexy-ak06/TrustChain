@@ -9,18 +9,18 @@ const PARTICLE_COUNT = 18;
 function OptimizedTrails() {
   const meshRef = useRef(null);
 
-  // Pre-calculate distinct movement behaviors for each packet array to bypass frame re-allocation
+  
   const packetSpecs = useMemo(() => {
     const specs = [];
     const colorInstance = new THREE.Color();
     
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      // Establish distinct radius lengths, cycle offsets, and velocities
+      
       const radius = 1.8 + i * 0.08;
       const speed = 0.7 + i * 0.025;
       const offset = i * 0.6;
       
-      // Determine color profiles matching your design system
+     
       let colorHex = "#ffffff";
       if (i % 3 === 0) colorHex = "#22d3ee"; // Cyan
       else if (i % 3 === 1) colorHex = "#a855f7"; // Purple
@@ -35,9 +35,9 @@ function OptimizedTrails() {
     return specs;
   }, []);
 
-  // Frame animation runner loop
+
   useFrame(({ clock }) => {
-    // Safety guard: Ensure the pooled instanced mesh container is fully mounted on the DOM
+    
     if (!meshRef.current) return;
 
     const elapsedTime = clock.getElapsedTime();
@@ -46,24 +46,23 @@ function OptimizedTrails() {
     packetSpecs.forEach((packet, index) => {
       const time = elapsedTime * packet.speed + packet.offset;
 
-      // Complex mathematical trajectory computation
+  
       const x = Math.cos(time) * packet.radius;
       const y = Math.sin(time * 1.3) * 1.2;
       const z = Math.sin(time) * packet.radius;
 
-      // Update the temporary calculation anchor matrix coordinates
+    
       tempObject.position.set(x, y, z);
       tempObject.updateMatrix();
 
-      // Commit coordinates to the specific pooled index handle
+      
       meshRef.current.setMatrixAt(index, tempObject.matrix);
     });
 
-    // Notify the GPU matrix array to process frame positioning updates instantly
     meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
-  // Color matching buffer hook applied on initialization
+  
   const onMeshInit = (mesh) => {
     if (!mesh) return;
     meshRef.current = mesh;
@@ -76,7 +75,7 @@ function OptimizedTrails() {
 
   return (
     <group>
-      {/* ⚡ INSTANCED MESH: Compiles all 18 particles down to 1 hardware draw call */}
+  
       <instancedMesh 
         ref={onMeshInit} 
         args={[null, null, PARTICLE_COUNT]}
@@ -91,7 +90,7 @@ function OptimizedTrails() {
         />
       </instancedMesh>
 
-      {/* BACKGROUND DECORATIVE HOOP CIRCUIT */}
+     
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[2.6, 0.015, 12, 140]} />
         <meshStandardMaterial
@@ -116,7 +115,7 @@ export default function ParticleTrails3D() {
       </p>
 
       <div className="h-[620px] rounded-[38px] overflow-hidden border border-cyan-500/10 bg-[#02050a] shadow-2xl relative">
-        {/* Subtle grid background panel layout overlay */}
+        
         <div className="absolute inset-0 opacity-[0.01] bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
 
         <Canvas
@@ -160,7 +159,7 @@ export default function ParticleTrails3D() {
             autoRotateSpeed={0.4}
           />
 
-          {/* POST-PROCESSING HIGH-GLOW PIPELINE */}
+          
           <EffectComposer>
             <Bloom
               intensity={1.5}

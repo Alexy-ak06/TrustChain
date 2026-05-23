@@ -2,10 +2,9 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 
 export default function SecurityScorePanel({ product }) {
-  // Graceful fallback execution prevents DOM breaks if product properties drop off mid-stream
+
   if (!product) return null;
 
-  // Memoize internal scoring math blocks to prevent layout calculations on parent renders
   const scores = useMemo(() => {
     const hashScore = product?.hashValid ? 99 : 58;
     
@@ -46,7 +45,7 @@ export default function SecurityScorePanel({ product }) {
         label: "Tamper Probability",
         value: tamperScore,
         suffix: "%",
-        isDangerMetric: true, // Configures reverse danger tracking metrics
+        isDangerMetric: true, 
       },
     ];
   }, [product]);
@@ -59,7 +58,7 @@ export default function SecurityScorePanel({ product }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {scores.map((score, index) => {
-          // Determine if this specific card state is reflecting a structural failure threat
+      
           const triggerDangerState = 
             (score.isDangerMetric && score.value > 30) || 
             (!score.isDangerMetric && score.value < 60);
@@ -88,7 +87,7 @@ export default function SecurityScorePanel({ product }) {
                 </h4>
               </div>
 
-              {/* TIMELINE PROGRESS HOVER EXPANSION */}
+              
               <div className="mt-5 h-2 rounded-full bg-cyan-950/40 border border-white/5 overflow-hidden relative w-full">
                 <motion.div
                   initial={{ width: 0 }}

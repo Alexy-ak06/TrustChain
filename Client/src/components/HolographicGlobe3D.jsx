@@ -1,3 +1,4 @@
+
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
@@ -9,7 +10,6 @@ function Earth() {
   const earthRef = useRef();
   const atmosphereRef = useRef();
 
-  // Securely fetch texture (Suspense handles the async lifecycle cleanly)
   const earthTexture = useLoader(
     TextureLoader,
     "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg"
@@ -17,16 +17,19 @@ function Earth() {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    // Smooth independent frame updates
-    if (earthRef.current) earthRef.current.rotation.y = time * 0.05;
-    if (atmosphereRef.current) atmosphereRef.current.rotation.y = -time * 0.02;
+
+    if (earthRef.current)
+      earthRef.current.rotation.y = time * 0.05;
+
+    if (atmosphereRef.current)
+      atmosphereRef.current.rotation.y = -time * 0.02;
   });
 
   return (
     <group>
-      {/* 🌍 THE CORE PLANET NODE */}
       <mesh ref={earthRef}>
         <sphereGeometry args={[2.3, 64, 64]} />
+
         <meshStandardMaterial
           map={earthTexture}
           emissive="#06b6d4"
@@ -36,21 +39,21 @@ function Earth() {
         />
       </mesh>
 
-      {/* 💨 SIMULATED ATMOSPHERIC GLOW LAYER */}
       <mesh ref={atmosphereRef} scale={1.04}>
         <sphereGeometry args={[2.3, 32, 32]} />
+
         <meshStandardMaterial
           color="#22d3ee"
           transparent
           opacity={0.12}
           wireframe={false}
-          blending={2} // Additive blending for an authentic sci-fi atmosphere
+          blending={2}
         />
       </mesh>
 
-      {/* 🪐 CYAN ENCRYPTION TRACK RINGS */}
       <mesh rotation={[Math.PI / 2.2, 0, 0]}>
         <torusGeometry args={[3.2, 0.015, 16, 100]} />
+
         <meshStandardMaterial
           color="#22d3ee"
           emissive="#22d3ee"
@@ -58,9 +61,9 @@ function Earth() {
         />
       </mesh>
 
-      {/* 🔮 PURPLE LEDGER RING TRANSVERSAL */}
       <mesh rotation={[Math.PI / -6, Math.PI / 4, 0]}>
         <torusGeometry args={[3.6, 0.01, 16, 100]} />
+
         <meshStandardMaterial
           color="#a855f7"
           emissive="#a855f7"
@@ -71,16 +74,19 @@ function Earth() {
   );
 }
 
-// 🎙️ Voice triggering element isolated safely onto resolution load
 function VoiceTrigger() {
   useEffect(() => {
     const speechTimer = setTimeout(() => {
       if (typeof speakTrustChain === "function") {
-        speakTrustChain("Loading three-dimensional cryptographic matrix. Global ledger synchronization visualized.");
+        speakTrustChain(
+          "Loading three-dimensional cryptographic matrix. Global ledger synchronization visualized."
+        );
       }
     }, 400);
+
     return () => clearTimeout(speechTimer);
   }, []);
+
   return null;
 }
 
@@ -96,20 +102,27 @@ export default function HolographicGlobe3D() {
       </p>
 
       <div className="h-[500px] md:h-[650px] rounded-3xl overflow-hidden border border-cyan-500/10 bg-black/40 backdrop-blur-md relative shadow-[0_0_60px_rgba(34,211,238,0.05)]">
-        
-        {/* CANVAS GRAPHICS CORE ARCHITECTURE */}
         <Canvas
           camera={{ position: [0, 0, 7.5], fov: 50 }}
-          dpr={[1, 2]} // Multi-sampling fallback optimization for ultra-crisp scaling
+          dpr={[1, 2]}
           gl={{
             antialias: true,
             powerPreference: "high-performance",
           }}
         >
           <ambientLight intensity={0.8} />
-          
-          <directionalLight position={[5, 3, 5]} intensity={2.5} color="#22d3ee" />
-          <directionalLight position={[-5, -3, -5]} intensity={1.5} color="#c084fc" />
+
+          <directionalLight
+            position={[5, 3, 5]}
+            intensity={2.5}
+            color="#22d3ee"
+          />
+
+          <directionalLight
+            position={[-5, -3, -5]}
+            intensity={1.5}
+            color="#c084fc"
+          />
 
           <Stars
             radius={80}
@@ -121,7 +134,6 @@ export default function HolographicGlobe3D() {
             speed={1}
           />
 
-          {/* 🛡️ RE-ENGINEERED ASYNC BOUNDARY WRAPPER */}
           <Suspense fallback={null}>
             <Earth />
             <VoiceTrigger />
@@ -133,10 +145,9 @@ export default function HolographicGlobe3D() {
             autoRotate
             autoRotateSpeed={0.4}
             maxPolarAngle={Math.PI / 1.8}
-            minPolarAngle={Math.PI / 2.5} // Locks user dragging angle to prevent upside down flips
+            minPolarAngle={Math.PI / 2.5}
           />
 
-          {/* HIGH FIDELITY POST PROCESSING MATRICES */}
           <EffectComposer multisampling={4}>
             <Bloom
               intensity={1.2}
@@ -146,16 +157,21 @@ export default function HolographicGlobe3D() {
           </EffectComposer>
         </Canvas>
 
-        {/* HUD META WATERMARKS */}
         <div className="absolute left-6 top-6 bg-black/70 border border-cyan-500/10 rounded-xl p-4 backdrop-blur-md pointer-events-none">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            <p className="text-xs font-black text-cyan-300 tracking-widest">3D VECTOR RENDER: ACTIVE</p>
-          </div>
-          <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Orbit navigation matrix operational</p>
-        </div>
 
+            <p className="text-xs font-black text-cyan-300 tracking-widest">
+              3D VECTOR RENDER: ACTIVE
+            </p>
+          </div>
+
+          <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">
+            Orbit navigation matrix operational
+          </p>
+        </div>
       </div>
     </div>
   );
 }
+

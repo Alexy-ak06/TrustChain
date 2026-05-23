@@ -15,14 +15,14 @@ export default function BootLoader() {
     "TrustChain Intelligence Kernel Online.",
   ];
 
-  // Progressive text terminal execution + Automatic exit loop
+  
   useEffect(() => {
     if (!visible) return;
 
     if (currentLineIndex >= bootLines.length) {
       const autoExitTimer = setTimeout(() => {
         setVisible(false);
-      }, 800); // 800ms dramatic pause at 100% before fade-out
+      }, 800); 
       return () => clearTimeout(autoExitTimer);
     }
 
@@ -34,22 +34,22 @@ export default function BootLoader() {
     return () => clearTimeout(timer);
   }, [currentLineIndex, visible, bootLines.length]);
 
-  // Viewport scroll blocker + Context-Aware Command Voice initialization
+  
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // Trap document viewports safely
+    document.body.style.overflow = "hidden"; 
     
-    // Check if user has initialized this terminal before
+    
     const isFirstTime = !localStorage.getItem("trustchain_initialized");
     
     let speechPayload = "";
     if (isFirstTime) {
       speechPayload = " Tactical Grid operational. Cryptographic perimeter secure. New administrator profile detected. System authorization granted.";
-      localStorage.setItem("trustchain_initialized", "true"); // Register profile
+      localStorage.setItem("trustchain_initialized", "true"); 
     } else {
       speechPayload = "Tactical Grid operational. Cryptographic perimeter secure. Welcome back, Administrator.";
     }
 
-    // Command Voice Sequence: Fires exactly as the mainframe stabilizes
+   
     const soundTimer = setTimeout(() => {
       if (typeof speakTrustChain === "function") {
         speakTrustChain(speechPayload);
@@ -74,15 +74,14 @@ export default function BootLoader() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[999999] flex items-center justify-center bg-black font-mono select-none"
         >
-          {/* HOLOGRAPHIC CENTRAL RADIAL LIGHT BURST */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.12),transparent_50%)]" />
 
-          {/* BACKGROUND DATA MATRIX HUD GRID */}
+         
           <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#22d3ee_1px,transparent_1px),linear-gradient(to_bottom,#22d3ee_1px,transparent_1px)] bg-[size:32px_32px]" />
 
           <div className="relative w-[90%] max-w-2xl rounded-2xl border border-cyan-500/20 bg-black/80 p-6 md:p-8 backdrop-blur-xl shadow-[0_0_80px_rgba(34,211,238,0.15)]">
             
-            {/* TERMINAL HEADER BRAND */}
+           
             <div className="flex flex-col items-center border-b border-cyan-500/10 pb-4">
               <motion.h1 
                 animate={{ textShadow: ["0 0 10px rgba(34,211,238,0.2)", "0 0 25px rgba(34,211,238,0.5)", "0 0 10px rgba(34,211,238,0.2)"] }}
@@ -96,7 +95,7 @@ export default function BootLoader() {
               </p>
             </div>
 
-            {/* SEQUENTIAL TERMINAL TEXT FEEDS */}
+        
             <div className="mt-6 h-48 space-y-2.5 overflow-hidden text-xs md:text-sm">
               <AnimatePresence>
                 {bootLines.slice(0, currentLineIndex + 1).map((line, index) => {
@@ -123,7 +122,7 @@ export default function BootLoader() {
               </AnimatePresence>
             </div>
 
-            {/* SYNCHRONIZED MATRIX PROGRESS HOUSING */}
+           
             <div className="mt-6 space-y-2">
               <div className="flex justify-between text-[10px] text-cyan-500/50 uppercase tracking-widest">
                 <span>System Compilation Matrix</span>
@@ -139,7 +138,7 @@ export default function BootLoader() {
               </div>
             </div>
 
-            {/* TACTICAL BYPASS INTERCEPTOR */}
+            
             <div className="mt-6 flex justify-end">
               <button
                 onClick={handleBypass}

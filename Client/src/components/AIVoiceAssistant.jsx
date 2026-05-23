@@ -2,9 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * GLOBAL VOICE EVENT DISPATCHER
- */
+
 const dispatchVoiceState = (isSpeaking) => {
   const event = new CustomEvent("trustchain_voice_state", {
     detail: { isSpeaking },
@@ -13,24 +11,19 @@ const dispatchVoiceState = (isSpeaking) => {
   window.dispatchEvent(event);
 };
 
-/**
- * GLOBAL SPEECH LOCK
- * Prevents overlapping AI voice streams
- */
+
 let voiceBusy = false;
 
-/**
- * TRUSTCHAIN SPEECH ENGINE
- */
+
 export function speakTrustChain(message, onStartCallback = null) {
   if (!window.speechSynthesis) return;
 
-  // Prevent repeated/overlapping voice calls
+ 
   if (voiceBusy) return;
 
   voiceBusy = true;
 
-  // Convert decimals safely for speech engine
+  
   const sanitizedMessage = message.replace(
     /(\d+)\.(\d+)/g,
     "$1 point $2"
@@ -40,9 +33,7 @@ export function speakTrustChain(message, onStartCallback = null) {
 
   const availableVoices = window.speechSynthesis.getVoices();
 
-  /**
-   * CYBERNETIC MALE VOICE PRIORITY
-   */
+  
   const targetVoice =
     availableVoices.find((v) => v.name.includes("David")) ||
     availableVoices.find((v) => v.name.includes("Male")) ||
@@ -57,16 +48,13 @@ export function speakTrustChain(message, onStartCallback = null) {
     utterance.voice = targetVoice;
   }
 
-  /**
-   * SYNTHETIC VOICE SETTINGS
-   */
+ 
+   
   utterance.rate = 1.0;
   utterance.pitch = 0.65;
   utterance.volume = 1;
 
-  /**
-   * SPEECH START
-   */
+  
   utterance.onstart = () => {
     dispatchVoiceState(true);
 
@@ -75,9 +63,7 @@ export function speakTrustChain(message, onStartCallback = null) {
     }
   };
 
-  /**
-   * SPEECH END
-   */
+  
   utterance.onend = () => {
     dispatchVoiceState(false);
 
@@ -86,9 +72,7 @@ export function speakTrustChain(message, onStartCallback = null) {
     }, 500);
   };
 
-  /**
-   * SPEECH ERROR
-   */
+  
   utterance.onerror = () => {
     dispatchVoiceState(false);
     voiceBusy = false;
@@ -97,16 +81,12 @@ export function speakTrustChain(message, onStartCallback = null) {
   window.speechSynthesis.speak(utterance);
 }
 
-/**
- * MAIN AI HUD COMPONENT
- */
+
 export default function AIVoiceAssistant() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [systemActive, setSystemActive] = useState(false);
 
-  /**
-   * GLOBAL VOICE EVENT LISTENER
-   */
+  
   useEffect(() => {
     const handleGlobalVoiceChange = (e) => {
       setIsSpeaking(e.detail.isSpeaking);
@@ -129,9 +109,7 @@ export default function AIVoiceAssistant() {
     };
   }, []);
 
-  /**
-   * MANUAL ACTIVATION
-   */
+  
   const handleActivationClick = () => {
     setSystemActive(true);
 
@@ -166,7 +144,7 @@ export default function AIVoiceAssistant() {
           : "Activate AI Voice"}
       </motion.button>
 
-      {/* VOICE EQUALIZER */}
+     
       <AnimatePresence>
         {isSpeaking && (
           <motion.div

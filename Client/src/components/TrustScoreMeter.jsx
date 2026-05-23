@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 
 export default function TrustScoreMeter({ score = 0 }) {
-  // Memoize state variables to prevent redundant re-renders
+ 
   const status = useMemo(() => {
     if (score >= 90) return { color: "green", gradient: "from-emerald-400 to-cyan-400", label: "VERIFIED" };
     if (score >= 70) return { color: "yellow", gradient: "from-amber-300 to-orange-400", label: "MONITORED" };
@@ -31,9 +31,9 @@ export default function TrustScoreMeter({ score = 0 }) {
         </motion.div>
       </div>
 
-      {/* Progress Track with Threshold Markers */}
+      
       <div className="mt-8 h-4 rounded-full bg-cyan-950/40 relative border border-white/5 overflow-hidden">
-        {/* Threshold Ticks */}
+        
         <div className="absolute inset-0 flex justify-between px-1 items-center">
           <div className="w-[2px] h-full bg-white/10" />
           <div className="w-[2px] h-full bg-white/10" />

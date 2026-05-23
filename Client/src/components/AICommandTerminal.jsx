@@ -23,7 +23,7 @@ export default function AICommandTerminal() {
 
       <div className="relative overflow-hidden rounded-[48px] border border-green-400/30 bg-black shadow-[0_0_90px_rgba(74,222,128,0.18)]">
 
-        {/* TERMINAL HEADER */}
+        
         <div className="flex items-center gap-3 border-b border-white/10 px-6 py-4 bg-white/5">
           <div className="h-3 w-3 rounded-full bg-red-400"></div>
           <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
@@ -34,7 +34,7 @@ export default function AICommandTerminal() {
           </p>
         </div>
 
-        {/* TERMINAL BODY */}
+        
         <div className="p-8 space-y-5 font-mono text-sm md:text-base">
           {commands.map((command, index) => (
             <motion.div
@@ -64,7 +64,7 @@ export default function AICommandTerminal() {
             </motion.div>
           ))}
 
-          {/* BLINKING CURSOR */}
+         
           <motion.div
             animate={{
               opacity: [0, 1, 0],
