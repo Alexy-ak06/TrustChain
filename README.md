@@ -6,7 +6,7 @@ TrustChain is an advanced full-stack product authentication platform designed to
 
 The project combines modern frontend engineering, backend architecture, real-time product verification workflows, and futuristic visual intelligence systems into a single interactive experience.
 
------
+---
 
 # Live Deployment
 
@@ -116,9 +116,9 @@ Risk Analysis System
 
 ## Clone Repository
 
-```bash
+bash
 git clone https://github.com/Alexy-ak06/TrustChain.git
-```
+
 
 ---
 
@@ -146,23 +146,61 @@ npm start
 
 Create a `.env` file inside the `server` folder.
 
-env
+```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=my_secret_key
 PORT=5000
-
+```
 
 ---
 
 # Screenshots
 
-Add screenshots of:
+## Landing Page
 
-* Landing Page
-* Product Verification System
-* Holographic Supply Timeline
-* AI Command Terminal
-* Verification Dashboard
+![Home](Client/src/assets/screenshots/home.png)
+
+---
+
+## Product Verification
+
+![Verification](Client/src/assets/screenshots/verify.png)
+
+---
+
+## Holographic Globe
+
+![Globe](Client/src/assets/screenshots/globe.png)
+
+---
+
+## AI Command Core
+
+![3D Core](Client/src/assets/screenshots/3d%20core.png)
+
+---
+
+## Threat Intelligence
+
+![Threats](Client/src/assets/screenshots/threats.png)
+
+---
+
+## Neural Analysis Network
+
+![Neural Core](Client/src/assets/screenshots/3d%20neural%20core.png)
+
+---
+
+## Distributed Blockchain Network
+
+![Network](Client/src/assets/screenshots/Network.png)
+
+---
+
+## Admin Dashboard
+
+![Dashboard](Client/src/assets/screenshots/dashboard.png)
 
 ---
 
