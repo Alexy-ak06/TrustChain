@@ -5,7 +5,7 @@ import {
   getProducts,
   getProductById,
   createProduct,
-} from "../controllers/productController.js";
+} from "../controllers/productcontroller.js";
 
 import protectAdmin from "../middleware/authMiddleware.js";
 
