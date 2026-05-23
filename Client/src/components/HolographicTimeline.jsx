@@ -1,32 +1,10 @@
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { speakTrustChain } from "./AIVoiceAssistant";
 
-export default function HolographicTimeline({ timeline = [], verified = true }) {
-  const hasSpokenRef = useRef(false);
-
-  useEffect(() => {
-    if (!timeline || timeline.length === 0) return;
-    if (hasSpokenRef.current) return;
-
-    const speechTimer = setTimeout(() => {
-      if (verified) {
-        speakTrustChain(
-          "Supply chain trace successfully verified across five ledger layers."
-        );
-      } else {
-        speakTrustChain(
-          "Warning. Supply chain trace failed cryptographic authentication check."
-        );
-      }
-
-      hasSpokenRef.current = true;
-    }, 600);
-
-    return () => clearTimeout(speechTimer);
-  }, [verified, timeline.length]);
-
+export default function HolographicTimeline({
+  timeline = [],
+  verified = true,
+}) {
   if (!timeline || timeline.length === 0) {
     return (
       <div className="mt-10 rounded-3xl border border-dashed border-cyan-500/20 bg-black/40 p-10 text-center font-mono">

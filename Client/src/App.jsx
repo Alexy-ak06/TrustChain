@@ -142,9 +142,10 @@ useEffect(() => {
 
 
       if (res.data.product.riskLevel === "High Risk") {
-  speakTrustChain("Warning. Counterfeit probability elevated.");
+  speakTrustChain("Warning. Supply chain trace failed cryptographic authentication check.");
 } else {
-  speakTrustChain("Product verified successfully. Blockchain record is valid.");
+  speakTrustChain("Supply chain trace successfully verified across five ledger layers.");
+
 }
     } catch {
       setError("Backend server connection failed");
