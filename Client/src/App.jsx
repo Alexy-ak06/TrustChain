@@ -49,7 +49,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { motion } from "framer-motion";
 
-const API = "http://localhost:5000/api";
+const API = "https://trustchain-backend-9mrf.onrender.com/api";
 
 const emptyForm = {
   productId: "",
@@ -111,7 +111,7 @@ const [liveEvents, setLiveEvents] = useState([]);
   }, []);
 
 useEffect(() => {
-  const socket = io("http://localhost:5000");
+  const socket = io("https://trustchain-backend-9mrf.onrender.com");
 
   socket.on("live-event", (event) => {
     setLiveEvents((prev) => [event, ...prev].slice(0, 8));
